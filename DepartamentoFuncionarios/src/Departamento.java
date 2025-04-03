@@ -56,7 +56,6 @@ public class Departamento {
         }
     }
 
-    // Métodos de ordenação
     public void ordenarPorNome() {
         Collections.sort(funcionarios);
         System.out.println("Funcionários ordenados por nome.");
