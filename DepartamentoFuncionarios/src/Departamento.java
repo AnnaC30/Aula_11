@@ -40,20 +40,22 @@ public class Departamento {
 
     public double obterTotalSalarios() {
         return funcionarios.stream()
-                         .mapToDouble(Funcionario::getSalario)
-                         .sum();
+                .mapToDouble(Funcionario::getSalario)
+                .sum();
     }
 
     public void promoverFuncionario(String nome, double aumento) {
-        Funcionario funcionario = buscarFuncionarioPorNome(nome);
-        
-        if (funcionario != null) {
-            funcionario.setSalario(funcionario.getSalario() + aumento);
-            System.out.printf("Funcionário %s recebeu aumento de R$%.2f. Novo salário: R$%.2f\n",
-                             nome, aumento, funcionario.getSalario());
-        } else {
-            System.out.println("Funcionário " + nome + " não encontrado!");
-        }
+        funcionarios.stream()
+            .filter(f -> f.getNome().equalsIgnoreCase(nome))
+            .findFirst()
+            .ifPresentOrElse(
+                f -> {
+                    f.setSalario(f.getSalario() + aumento);
+                    System.out.printf("Funcionário %s recebeu aumento de R$%.2f. Novo salário: R$%.2f\n",
+                        nome, aumento, f.getSalario());
+                },
+                () -> System.out.println("Funcionário " + nome + " não encontrado!")
+            );
     }
 
     public void ordenarPorNome() {
@@ -69,13 +71,6 @@ public class Departamento {
     public void ordenarPorSalario() {
         Collections.sort(funcionarios, Comparator.comparingDouble(Funcionario::getSalario));
         System.out.println("Funcionários ordenados por salário.");
-    }
-
-    private Funcionario buscarFuncionarioPorNome(String nome) {
-        return funcionarios.stream()
-                          .filter(f -> f.getNome().equalsIgnoreCase(nome))
-                          .findFirst()
-                          .orElse(null);
     }
 
     public void listarFuncionarios() {

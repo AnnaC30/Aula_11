@@ -93,7 +93,7 @@ public class App {
                         System.out.print("Opção: ");
                         int ordenacao = input.nextInt();
                         input.nextLine();
-                        
+
                         switch (ordenacao) {
                             case 1:
                                 dep.ordenarPorNome();
@@ -128,21 +128,7 @@ public class App {
         double aumento = input.nextDouble();
         input.nextLine();
 
-        Funcionario func = null;
-        for (Funcionario funcionario : dep.getFuncionarios()) {
-            if (funcionario.getNome().equalsIgnoreCase(nome)) {
-                func = funcionario;
-                break;
-            }
-        }
-
-        if (func == null) {
-            System.out.println("Funcionário não encontrado!");
-        } else {
-            double novoSalario = func.getSalario() + aumento;
-            func.setSalario(novoSalario);
-            System.out.printf("Aumento concedido! Novo salário de %s: R$%.2f\n", func.getNome(), novoSalario);
-        }
+        dep.promoverFuncionario(nome, aumento);
     }
 
     private static void exibirTotalSalarial(Departamento dep) {
@@ -153,10 +139,10 @@ public class App {
     private static void cadastrarFuncionario(Scanner input, Departamento departamento) {
         System.out.print("\nNome do funcionário: ");
         String nome = input.nextLine();
-        
+
         System.out.print("CPF do funcionário: ");
         String cpf = input.nextLine();
-        
+
         System.out.print("Salário do funcionário: ");
         double salario = input.nextDouble();
         input.nextLine();
@@ -169,7 +155,7 @@ public class App {
     private static void removerFuncionario(Scanner input, Departamento departamento) {
         System.out.print("\nNome do funcionário a remover: ");
         String nome = input.nextLine();
-        
+
         departamento.removerFuncionario(nome);
         System.out.println("Funcionário removido com sucesso!");
     }
